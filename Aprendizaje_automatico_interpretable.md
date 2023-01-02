@@ -52,7 +52,7 @@ Nota: Los métodos agnósticos de models interpretables tratan los modelos de ap
 
 **Tarea de aprendizaje automático**:
 
-Predicción**:
+**Predicción**:
 
 # Interpretabilidad
 
