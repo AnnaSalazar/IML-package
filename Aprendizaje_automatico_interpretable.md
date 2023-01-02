@@ -44,16 +44,54 @@ Nota: Los métodos agnósticos de models interpretables tratan los modelos de ap
 
 **Conjunto de datos (Dataset)**: tabla con los datos a partir de los cuales aprende la máquina. Contiene las variables y el objetivo a predecir. Cuando se utiliza para inducir un modelo, el conjunto de datos de denomina *datos de entrenamiento*.
 
-**Individuo/instancia**: 
+**Individuo/instancia**: una fila del conjunto de datos. Un individuo consiste en las variables explicativas $x^{(i)}$ y, si es conocida, su variable respuesta u objetivo $y_i$.
 
-**Variables/características**:
+**Variables explicativas (Features)**: las entradas utilizadas para la predicción/clasificación. Una variable es una columna del conjunto de datos. Se supone que las variables sn interpretables, es decir, que es fácil entender lo que significan. La matriz de las variables se denomina $X$ y $x^{(i)}$ para un único individuo. El vector de una única variable para todos los individuos es $x_j$, y el valor para una variable $j$ y un individuo $i$ es $x^{(i)}_j$.
 
-**Target/objetivo**:
+**Target/objetivo**: la información que la máquina aprende a predecir: $y$ o $y_i$, para un único individuo.
 
-**Tarea de aprendizaje automático**:
+**Tarea de aprendizaje automático**: La combinación de un conjunto de datos con variables explicativas y objetivo. Dependiendo del objetivo la tarea puede ser, por ejemplo, clasificación, regresión, análisis de supervivencia, agrupación o detección de valores atípicos.
 
-**Predicción**:
+**Predicción**: aquello que el modelo de aprendizaje automático *adivina* sobre cuál debería ser el valor objetivo basándose en las variables explicativas. Se denomina $\hat{f}(x^{(i)})$ o $\hat{y}$.
 
 # Interpretabilidad
 
+Es difícil definir (matemáticamente) la interpretabilidad. Una definición (no matemática) podría ser: el grado en que un humano puede entender la causa de una decisión, Miller (2017). Cuanto mayor sea la interpretabilidad de un modelo de parendizaje automático, más fácil será para alguien comprender por qué se han tomado ciertas decisiones o se han hecho xiertas predicciones.
 
+Un modelo es más interpretable que otro si sus decisiones son más fáciles de comprender para un ser humano que las decisiones del otro modelo.
+
+El aprendizaje automático interpretable es un término general útil que abarca la "extracción de conocimientos relevantes de un modelo de aprendizaje automático sobre las relaciones contenidas en los datos o aprendidas por el modelo".
+
+## La importancia de la interpretabilidad
+
+Si un modelo de aprendizaje automático funciona bien, ¿por qué no nos limitamos a confiar en él e ignoramos por qué ha tomado una determinada decisión? $\rightarrow$ El problema es que una sola métrica, como la precisión de la clasificación, es una descripción incompleta de la mayoría de las tareas del mundo real. (Doshi-Velez y Kim 2017)
+
+Cuando se trata de un modelo predictivo, ¿únicamente queremos saber el valor que se predice? ¿O queremos saber por qué se hizo la predicción y, posiblemente, pagar la interpretabilidad con una caída del rendimiento predictivo? En algunos casos, no importa por qué se tomó una decisión, basta con saber que el rendimiento predictivo en un conjunto de datos fue bueno. Pero en otros casos, saber el "por qué" puede ayudar a conocer mejor el problema, los datos y la razón por la que un moelo puede fallar. La necesidad de interpretabilidad surge de una incompletitud en la formalización del problema, lo que significa que para ciertos problemas o tareas no basta con obtener la predicción, sino que el modelo también debe explicar como se llego a ella, porque una predicción correcta solo resuelve parcialmente su problema original.
+
+**La curiosidad humana y el aprendizaje**
+
+Los seres humanos tenemos un modelo mental de nuestro entorno hasta que se actualiza cuando ocurre algo inesperado. Esta actualización se realiza buscando una explicación para este suceso inesperado. Cuando se utilizan modelos opacos de aprendizaje automático en la investigación, los hallazgos científicos quedan completamente ocultos si el modelo sólo ofrece predicciones sin explicaciones. Para facilitar el aprendizaje y satisfacer la curiosidad de por qué las máquinas crean determinadas predicciones o comportamientos, la interpretabilidad y las explicaciones son cruciales.
+
+Estrechamente relacionado con el aprendizaje está el deseo humano de encontrar sentido al mundo. Queremos armonizar contradicciones o incoherencias entre elementos de nuestras estructuras de conocimiento. Cuanto más afecta la decisión de una máquina a la vida de una persona, más importante es que la máquina explique su comportamiento. Por ejemplo, si un modelo de aprendizaje rechaza una solicitud de préstamo, esto puede ser completamente inesperado para los solicitantes, que sólo podrán conciliar esta incoherencia entre expectativas y realidad mediante algún tipo de explicación. En realidad, las explicaciones no tienen que explicar completamente la situación, pero deben abordar una causa principal.
+
+Muchas disciplinas científicas están pasando de los métodos cualitativos a los cuantitativos, y también hacia el aprendizaje automático. El objetivo de la ciencia es adquirir conocimientos, pero muchos problemas se resuelven con grandes cantidades de datos y modelos de aprendizaje automático de caja negra. El propio modelo se convierte en la fuente de conocimiento en lugar de los datos, y la interpretabilidad permite extraer este conocimiento adicional captado por el modelo.
+
+Por defecto, los modelos de aprendizaje automático adquieren sesgos de los datos de entrenamiento. Esto puede convertir los modelos en "racistas" que discriminen a los grupos infrarrepresentados. La interpretabilidad es una herramienta de depuración útil para detectar sesgos en los modelos de aprendizaje automático. Si se detectan estos sesgos, se pueden añadir nuevas restricciones en el modelo para evitarlos y, con ello, optimizar el modelo.
+
+El proceso de integración de máquinas y algoritmos en nuestra vida cotidiana requiere interpretabilidad para aumentar la aceptación social. La gente atribuye a los objetos creencias, deseos, intenciones, etc. Una máquina o algoritmo que explique sus predicciones tendrá más aceptación. La explicaciones sirven para gestionar las interacciones sociales. Al crear un significado compartido de algo, el emisor influye en las acciones, emociones y creencias del receptor. Para que una máquina interactúe con nosotros, puede necesitar moldear nuestras emociones y creencias. La máquinas tienen que "persuadirnos" para alcanzar su objetivo. Curiosamente, puede haber un desajuste entre lo que la máquina explica (crear confianza) y el objetivo del receptor (entender la predicción o el comportamiento).
+
+Los modelos de aprendizaje automático sólo pueden depurarse y auditarse cuando pueden interpretarse. Incluso en entornos de bajo riesgo, como las recomendaciones de películas, la capacidad de interpretación es valiosa en la fase de investigación y desarrollo, así como después de la implantación. La interpretación de una predicción errónea ayuda a comprender la causa del error. Aporta una orientación sobre cómo arreglar el problema.
+
+Si puede asegurarse que el modleo puede explicar las decisiones, también puede comprobar los siguientes rasgos más fácilmente:
+- Imparcialidad: garantizar que las predicciones no discriminan implícita o explícitamente a los grupos infrarrepresentados. 
+- Privacidad: asegurar la protección de la información sensible contenida en los datos.
+- Fiabilidad o robustez: comprobar que los pequeños cambios en los datos de entrada no provoquen grandes cambios en la predicción.
+- Causalidad: cerciorarse de que sólo se detectan las relaciones causales.
+- Confianza: a los humanos les resulta más fácil confiar en un sistema que explica sus decisiones que en una caja negra.
+
+
+**¿Cuándo no necesitamos la interpretabilidad?**
+
+La interpretabilidad no es necesaria si el modelo no tiene un impacto significativo. En cuanto el modelo tiene un impacto significativo, ya sea financiero o social, la interpretabilidad adquiere relevancia.
+
+Tampoco es necesaria cuando el modelo está bien estudiado
