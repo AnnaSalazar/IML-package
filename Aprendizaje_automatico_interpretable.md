@@ -192,7 +192,78 @@ Propiedades de los métodos de explicación y las explicaciones (Robnik-Sikonja 
 
 - **Poder expresivo**: el "lenguaje" o la extructura de las explicaciones que el método es capaz de generar.
 - **Translucidez**: describe hasta qué punto el método de explicación se basa en mirar dentro del modelo, como en sus parámetros. Dependiendo del escenario pueden ser deseables distintos niveles de translucidez. Ventaja que sea alta: el método puede basarse en más información para generar explicaciones. Ventaja de que sea baja: el método de explicación es más flexible.
-- **Portabilidad**:
-- **Complejidad algorítmica**: 
+- **Portabilidad**: describe la gama de modelos con los que se puede utilizar un método de explicación. Los métodos con baja translucidez tienen mayor portabilidad porque tratan el modelo como una caja negra. Los que tienen mayor portabilidad son los modelos sustitutos.
+- **Complejidad algorítmica**: la complejidad computacional del método que genera la explicación. Es importante tener en cuenta esta propiedad cuando el tiempo de cálculo es un cuello de botella a la hora de generar explicaciones.
+
+### Propiedades de las explicaciones individuales
+
+- **Precisión**: Una precisión alta es importante si la explicación se utiliza para realizar predicciones en lugar del modelo, pero no lo es si la precisión del modelo también es baja y el objetivo es explicar lo que hace el modleo de caja negra.
+- **Fidelidad**: en qué medida se aproxima la explicación a la predicción del modelo de caja negra.Una explicación con baja fidelidad es inútil para explicar el modelo. La precisión y la fidelidad están estrechamente relacionadas. Algunas explicaciones sólo ofrecen fidelidad local (la explicación sólo se aproxima bien a la predicción del modelo para un subconjunto de datos).
+- **Coherencia**: en qué medida difiere una explicación entre modelos que han sido entrenados para la misma tarea y que producen predicciones similares. Si las explicaciones son muy parecidas, seran muy coherentes.
+
+*Nota*: Efecto Rashomon = los modelos podrían utilizar características diferentes, pero obtener predicciones similares. En este caso una alta coherencia no es deseable, porque las explicaciones tienen que ser muy diferentes.
+
+- **Estabilidad**: mientras que la coherencia compara explicaciones entre modelos, la estabilidad lo hace entre instancias similares para un modelo fijo. Una alta estabilidad significa que ligeras variaciones en las variables de un caso no cambian sustancialmente la explicación (a menos que estas ligeras variaciones también cambien en gran medida la predicción). La falta de estabilidad puede deberse a una varianza elevada en el método de explicación.
+- **Comprensibilidad**: en qué medida entienden los humanos las predicciones. Entre las medidas para medir la comprensibilidad se incluyen medir el tamaño de la explicación o probar hasta qué punto las personas pueden predecir el comportamiento del modelo a partir de las explicaciones. También debe tenerse en cuenta la comprensibilidad de las variables usadas en la explicación (una transformación compleja de las variables puede resultar menos comprensible que las variables originales).
+- **Certeza**: medida de confianza para las predicciones del modelo.
+- **Grado de importancia**: en qué medida refleja la explicación la importancia de las características o partes de la explicación-
+- **Novedad**: ¿refleja la explicación si un dato que hay que explicar procede de una región "nueva" alejada de la distribución de los datos de entrenamiento? Cuanto mayor sea la novedad, más probable es que el modelo tenga poca certeza debido a la falta de datos.
+- **Representatividad**: Cuantas instancias (individuos) cubre una explicación.
 
 ## Explicacines Human-friendly
+
+La explicaciones son interacciones sociales entre entre el emisor y el receptor y, por tanto, el contexto social influye mucho en el contenido real de la explicación.
+
+Cuando se necesitan explicaciones con TODOS los fatores para una predicción o comportamiento concreto, no se requiere una explicación humana, sino una atribución causal completa.
+
+En los sucesivo, el término *explicación* se refiere al proceso social y cognitivo de explicar, pero también al producto de estos procesos. El *explicador* u omisor puede ser un ser humano o una máquina.
+
+
+### ¿Qué es una buena explicación?
+
+La explicaciones son **contrastables**. Los humanos no solemos preguntarnos por qué se hizo determinada predicción, sino por qué se hizo esta en lugar de otra. De la mayoría de los modelos interpretables se puede extraer una una explicación que implícitamente contrasta la predicción de una instancia con la predicción de una instancia de datos artificial o una media de instancias. La explicaciones contrastivas son más fáciles de entender que las explicaciones completas. La mejor explicación destaca la mayor diferencia entre el objeto de interés y el objeto de referencia.
+
+**¿Qué sigifica para el aprendizaje automático interpretable?**: la creación de explicaciones contrastables depende de la aplicación, en la medida que requiere un punto de referencia para la comparación. Y esto puede depender del punto de datos a explicar, pero también del usuario que recibe la explicación. La solución para la creación automática de explicaciones contrastables también puede consistir en encontrar prototipos o arquetipos de datos.
+
+Las explicaciones se **seleccionan**. La gente no espera explicaciones que abarquen la lista real y completa de causas del suceso, sino que estamos acostumbrados a seleccionar 1 o 2 causas de entre una variedad de causas posibles como LA explicación. El hecho de que un acontecimiento pueda explicarse por varias causas se denomina efecto Rashomon. Los métodos de conjunto, que combinan varios modelos con distintas características (diferentes explicaciones), suelen dar bueos resultados (predicciones más sólidas y presisas), pero tambéi significa que hay más de una explicación selectiva de por qué se hizo determinada predicción.
+
+**Método LIME**: para hacer explicaciones muy cortas (de solo 1 o 3 razones, aunque el mundo sea más complejo).
+
+Las explicaciones son sociales y forman parte de una conversación o interacción entre el que explica y el que recibe la información. Para el aprendizaje automático interpretable, acertar con la parte social del modelo depende totalmente de su aplicación específica.
+
+La explicaciones se centran en lo **anormal**. La gente se centra más en las causas anormales para explicar los acontecimientos. Se trata de causas que tenían una probabilidad pequeña pero que, sin embargo, ocurrieron. La eliminación de estas causas anormales habría cambiado mucho el resultado. Esto, en el ámbito del aprendizaje autoomático se traduce en que si una de las variables de entrada de una predicción es atípica y la característica inflye en la predicción, debe incluirse en la predicción, incluso si otras características "normales" tienen la misma influencia en la predicción que esta.
+
+La explicaciones son veraces (resultan ser ciertas en la realidad), pero este no es el factor más importante para una buena explicación. Por ejemplo, la selectividad (selección de 1 o 2 causas posibles) parece ser más importante que la veracidad, aunque omite parte de la verdad.
+
+Las buenas explicaciones son **coherentes** con las creencias previas del receptor de la explicación. Los seres humans tendems a ignorar la información que no concuerda con nuestras creenias previas (sesgo de confirmación). Esto es difícil de integrar en el aprendizaje automático y probablemente comprometería drásticamente el rendimiento predictivo. Se pueden imponer restricciones de monotonicidad (una característica sólo puede afectar a la predicción en una dirección) o utilizar algo como un modelo lineal que tenga esta propiedad.
+
+Las buenas explicaciones son generales y probables. Una csausa que puede explicar muchos sucesos es muy general y podría considerarse una buena explicación. La generalidad puede medirse fácilmente por el soporte de una característica, que es el número de instancias a las que se aplica la explicación dividido por el número total de instancias.
+
+
+# Modelos interpretables
+
+## Regresión lineal
+
+## Regresión logística
+
+## GLM, GAM y más
+
+## Árboles de decisión
+
+## Reglas de decisión
+
+## RuleFit
+
+## Otros modelos interpretables
+
+# Métodos agnósticos de modelos
+
+
+
+
+
+
+
+
+
+
