@@ -94,4 +94,61 @@ Si puede asegurarse que el modleo puede explicar las decisiones, también puede 
 
 La interpretabilidad no es necesaria si el modelo no tiene un impacto significativo. En cuanto el modelo tiene un impacto significativo, ya sea financiero o social, la interpretabilidad adquiere relevancia.
 
-Tampoco es necesaria cuando el modelo está bien estudiado
+Tampoco es necesaria cuando el modelo está bien estudiado. Algunas aplicaciones han sido lo suficientemente bien estudiadas como para que haya suficiente experiencia práctica con el mdelo y sus problemas se hayan resuelto con el tiempo.
+
+La interpretabilidad puede permitir que personas o programas manipulen el sistema. Los problmas con usuarios que engañan a un sistema se derivan de un desajuste entre los bjetivos dl creador y el usuario de un modelo. Solo se puede engañar al sistema si las entradas son aproximaciones a una característica causal, pero no causan realmente el resultado. Siempre que sea posible, deben evitarse las características indirectas, ya que hacen que los modelos sean manipulables.
+
+## Taxonomía de los métodos de interpretabilidad
+
+Los métodos de interpretabilidad del aprendizaje automático pueden clasificarse según varios criterios.
+
+1. ¿Intrínseca o post hoc?
+
+Este criterio distingue si la interpretabilidad se consigue restringiendo la complejidad del modelo (intrínseca) o aplicando métodos que analizan el modelo después del entrenamiento (post hoc).
+
+- **Intrínseca**: Se refiere a modelos que se consideran interpretables debido a su estructura simple, como los árboles de decisión cortos o los modelos lineales dispersos.
+- **Post hoc**: Se refiere a la aplicación de métodos de interpretación tras el entrenamiento del modelo.
+
+*Nota*: Los métodos post hoc también pueden aplicarse en modelos intrínsecamente interpretables. Por ejemplo, la permutación de la importancia de los rasgos puede calcularse para árboles de decisión.
+
+2. Resultado del método de interpretación
+
+Los distintos métodos de interpretación pueden diferenciarse a grandes rasgos en función de sus resultados.
+
+- Estadísticos de resumen de las variables: muchos métodos de interpretación proporcionan estadísticos para cada atributo. Algunos devuelven un único resultado, como la importancia de la variable, mientras que otros dan resultados más complejos, como las fuerzas de interacción entre variables por pares.
+- Visualización del resumen de las variables: La mayoría de los resúmenes estadísticos de las variables también pueden visualizarse. Por ejemplo, los gráficos de independencia parcial, que son curvas que muestran una característica y el resultado medio previsto.
+- Datos internos del modelo (por ejemplo, los pesos): la interpretación de modelos intrínsecos entra en esta categoría. En los modleos lineales, por ejemplo, los límites entre los datos internos del modelo y los estadísticos de resumen de las variables son difusos, ya que los pesos son a la vez datos internos del modelo y estadísticos de resumen de las variables.
+- Punto de datos: esta categoría incluye todos los métodos que devuelven puntos de datos (ya existentes o de nueva creación) para hacer interpretable un modelo. Uno de los métodos se denomina *explicaciones contrafactuales*. Para explicar la predicción de una instancia de datos, el método encuentra un punto de dats similar cambiando algunas variables para las que el resultado predicho cambia de forma relevante. Para ser útiles, los métodos de interpretación que producen nuevos puntos de datos requieren que los propios puntos de datos puedan interpretarse (funciona bien para imágenes y texto, pero es menos útil para datos tabulares con cientos de variables).
+- Modelos intrínsecamente interpretables: una solución para interpretar los modelos de caja negra es aproximarlos con un modelo interpretable. El modelo interpretable en si se entiende observando los parámetros interns del modelo o los estadísticos de resumen de las variables.
+
+3. ¿Modelo específico o agnóstico?
+
+La herramientas de interpretación específicas de un modelo se limitan a clases cncretas de modelos, mientras que las herramientas agnósticas al modelo pueden utilizarse en cualquier modelo de aprendizaje automático, y se aplican después de haber entrenado el modelo (post hoc). Por definición, estos métodos no pueden acceder a la información interna del modleo, como los pesos o la información estructural.
+
+4. ¿Local o global?
+
+¿El método de interpretación explica una predicción individual o todo el comportamiento del modelo? ¿O tiene un alcance intermedio?
+
+## Alcance de la interpretabilidad
+
+Un algoritmo entrena un modelo que produce predicciones. Cada paso puede evaluarse en términos de transparencia o interpretabilidad.
+
+### Transparencia del algoritmo
+
+La transparencia del algoritmo se refiere a cómo aprende un modelo a partir de los datos y qué tipo de relaciones puede aprender. En el caso de la redes convolucionales para interpretar imágenes, se puede explicar que el algoritmo aprende detectores de bordes y filtros en las capas más bajas. Así se entiende cómo funciona el algoritmo, pero no el modelo concreto que se aprende al final ni como se hacen las predicciones individuales. La transparencia del algoritmo solo requiere el conocimiento del algoritmo y no de los adtos o del modelo aprendido.
+
+### Interpretabilidad global y holística del modelo
+
+Se puede decir que un modleo es interpretable cuando se puede comprender todo el modelo a la vez. Para explicar el resultado global del modelo se necesita: el modelo entrenado, el conocimiento del algoritmo y los datos. Este nivel de interpretabilidad consiste en comprender cómo toma decisiones el modelo, basándose en una visión holística de sus variables y de cada uno de los componentes aprendidos, como pesos, otros parámetros y estructuras.
+
+La interpretabilidad global del modelo ayuda a comprender la distribución del resultado deseado en función de sus características. Es muy difícil de conseguir en la práctica, ya que cualquier modelo que supere un puñado de parámetros o ponderaciones es poco probable que quepa en la memoria a corto plazo del ser humano medio.
+
+### Interpretabilidad global del modelo a nivel modular
+
+Un modelo Naive Bayes con muchos cientos de características sería demasiado grande para que un humano lo guarde en su memoria de trabajo, pero en cambio, un humano puede enterder una sola ponderación. Aunque la interpretabilidad global de un modelo suele estar fuera de nuestro alcance, hay muchas posibilidades de entender al menos alguns modelos a nivel modeluar (de parámetros). En el caso de los modelos lineales, las partes interpretables son las ponderaciones, en el caso de los árboles serían las divisiones y las predicciones de los nodos hoja.
+
+Los modelos lineales, por ejemplo, parece como si pudieran interpretarse perfectamente a nivel modular, pero la interpretación de un solo peso está enlazada con todos los demás, ya que viene dada bajo la condición de que las demás variables de entrada se mantengan con el mismo valor, cosa que no ocurre en muchas aplicaciones reales. Aun así, las ponderaciones de un modelo lineal pueden interpretarse mejor que, por ejemplo, las de una red neuronal profunda.
+
+### Interpretabilidad local de una única predicción
+
+
