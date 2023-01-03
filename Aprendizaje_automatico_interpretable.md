@@ -151,4 +151,48 @@ Los modelos lineales, por ejemplo, parece como si pudieran interpretarse perfect
 
 ### Interpretabilidad local de una única predicción
 
+Es posible acercarse a un cas concreto y examinar lo que el modelo predice para esa entrada y explicar el por qué. Localmente, la predicción podría depender sólo lineal o monotónicamente de algunas variables, en lugar de tener una dependencia compleja entre ellas. Por tanto, las explicaciones locales puedes ser más precisas que las globales.
 
+### Interpretabilidad local de un grupo de predicciones
+
+La predicciones del modelo para varias instancias pueden explicarse con métodos globales de interpretación del modelo (a nivel modular) o con explicaciones de instancias individuales.
+
+1. Los métodos globales pueden aplicarse tomando el grupo de instancias, tratándolas como si el grupo fuera el conjunto de datos completo y utilizando los métodos globales en este subconjunto. 
+2. Los métodos de explicación individual pueden utilizarse en cada instancia y luego enumerarse o agregarse para todo el grupo.
+
+
+## Evaluación de la interpretabilidad
+
+No existe un conseso real sobre qué es la interpretabilidad en el aprendizaje automático. Tampoco está claro como medirla.
+
+Doshi-Velez y Kim (2017) proponen 3 niveles principales para la evaluación de la interpretabilidad:
+
+1. Evaluación a nivel de aplicación real
+
+Poner la explicación en el producto y que lo pruebe el usuario final. Esto requiere una buena configuración experimental y una comprensión de cómo evaluar la calidad. Un buen punto de referencia para ello es siempre cómo de bueno sería un humano explicando la misma decisión.
+
+2. Evaluación a nivel humano
+
+La diferencia diferencia es que estos experimentos no se realizan con los expertos del dominio, sino con particulares. Esto hace que los experimentos sean más baratos y sea más fácil encontrar probadores.
+
+3. Evaluación a nivel de función
+
+Funciona mejor cuando la clase de modelo utilizada ya ha sido evaluada por otra persona en una evaluación a nivel humano. Por ejemplo, una evaluación a nivel de función de un árbol de decisión puede basarse en la profundidad del árbol. Los árboles más cortos obtendrían una mejor puntación de explicabilidad. Tendría sentido añadir esta restricción de que rendimiento predictivo del árbol siga siendo bueno y no disminuya demasiado en comparación con un árbol grande.
+
+
+## Propiedades de las explicaciones
+
+Se quiere explicar las predicciones de un modelo de aprendizaje automático. (Método de explicación: algoritmo que genera explicacines)
+
+Una explicación suele relacionar los valores de las variables de un individuo con la predicción de su modelo de una forma humanamente comprensible.
+
+Propiedades de los métodos de explicación y las explicaciones (Robnik-Sikonja y Bohanec, 2018). Estas propiedades pueden utilizarse para juzgar lo bueno que es un modelo de explicación o una explicación.
+
+### Propiedades de los métodos de explicación
+
+- **Poder expresivo**: el "lenguaje" o la extructura de las explicaciones que el método es capaz de generar.
+- **Translucidez**: describe hasta qué punto el método de explicación se basa en mirar dentro del modelo, como en sus parámetros. Dependiendo del escenario pueden ser deseables distintos niveles de translucidez. Ventaja que sea alta: el método puede basarse en más información para generar explicaciones. Ventaja de que sea baja: el método de explicación es más flexible.
+- **Portabilidad**:
+- **Complejidad algorítmica**: 
+
+## Explicacines Human-friendly
